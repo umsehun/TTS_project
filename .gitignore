@@ -9,7 +9,12 @@ __pycache__
 build
 *.c
 monotonic_align/monotonic_align
-vits/dataset/wavs
+vits/dataset/wavs/*
+dataset/wavs/voice_1.wav
+dataset/wavs/voice_2.wav
+dataset/wavs/voice_3.wav
+dataset/wavs/voice_4.wav
+dataset/wavs/voice_5.wav
 vits_env/
 vits_env/Include
 vits_env/Lib
