@@ -10,3 +10,11 @@ build
 *.c
 monotonic_align/monotonic_align
 vits/dataset/wavs
+vits_env/
+vits_env/Include
+vits_env/Lib
+vits_env/Scripts
+vits_env/Library
+vits_env/bin
+vits_env/share
+vits_env/pyvenv.cfg
