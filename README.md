@@ -56,3 +56,4 @@ python train_ms.py -c configs/vctk_base.json -m vctk_base
 
 ## Inference Example
 See [inference.ipynb](inference.ipynb)
+# TTS_project
