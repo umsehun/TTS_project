@@ -456,15 +456,22 @@ class SynthesizerTrn(nn.Module):
     if n_speakers > 1:
       self.emb_g = nn.Embedding(n_speakers, gin_channels)
 
-  def forward(self, x, x_lengths, y, y_lengths, sid=None):
+  def forward(self, x, x_lengths, spec, spec_lengths):
+    # 패딩 수행 전 입력 텐서가 적절한지 확인
+    if x.dim() < 2 or spec.dim() < 2:
+        raise ValueError("Inputs to the model must be 2D or higher.")
 
-    x, m_p, logs_p, x_mask = self.enc_p(x, x_lengths)
+    # 패딩 적용 (constant padding 예시)
+    x_padded = F.pad(x, (1, 1), mode='constant', value=0)
+    spec_padded = F.pad(spec, (1, 1, 1, 1), mode='constant', value=0)
+
+    x, m_p, logs_p, x_mask = self.enc_p(x_padded, x_lengths)
     if self.n_speakers > 0:
       g = self.emb_g(sid).unsqueeze(-1) # [b, h, 1]
     else:
       g = None
 
-    z, m_q, logs_q, y_mask = self.enc_q(y, y_lengths, g=g)
+    z, m_q, logs_q, y_mask = self.enc_q(spec_padded, spec_lengths, g=g)
     z_p = self.flow(z, y_mask, g=g)
 
     with torch.no_grad():

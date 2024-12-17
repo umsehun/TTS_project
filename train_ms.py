@@ -85,6 +85,9 @@ def run(rank, n_gpus, hps):
       hps.data.filter_length // 2 + 1,
       hps.train.segment_size // hps.data.hop_length,
       n_speakers=hps.data.n_speakers,
+      n_heads=8,
+      n_layers=6,
+      resblock_dilation_sizes=[1, 2, 3],
       **hps.model).cuda(rank)
   net_d = MultiPeriodDiscriminator(hps.model.use_spectral_norm).cuda(rank)
   optim_g = torch.optim.AdamW(
